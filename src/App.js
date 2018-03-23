@@ -93,6 +93,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header/>
+        {loading && <h2>Loading</h2>}
         <button onClick={this.showNotes} style={{backgroundColor:notesFlag ? 'green' : ''}}>
           Notes
         </button>
