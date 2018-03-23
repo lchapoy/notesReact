@@ -46,7 +46,6 @@ class App extends Component {
     }
   }
   componentDidMount(){
-    axios.get('www.mysite.com/api/notes')
     GetNotes().then((notes)=>{
       this.setState({
         notes,
@@ -94,7 +93,6 @@ class App extends Component {
     return (
       <div className="App">
         <Header/>
-        {loading && <h2>Loading</h2>}
         <button onClick={this.showNotes} style={{backgroundColor:notesFlag ? 'green' : ''}}>
           Notes
         </button>
