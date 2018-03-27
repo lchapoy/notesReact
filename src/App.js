@@ -54,22 +54,21 @@ class App extends Component {
       })
     })
   }
-  shouldComponentUpdate(nextProps, nextState){
-    return nextState.notesFlag
-  }
 
   addNote = (title,description) =>{
-    const { notes } = this.state;
+    const { notes, editedId } = this.state;
     const index = Date.now();
     const newNotes = {
       ...notes,
-      [index]: {
+      [editedId || index]: {
         title,
         description
       }
     }
     this.setState({
-      notes: newNotes
+      notes: newNotes,
+      notesFlag: true,
+      editedId: null
     })
   };
 
@@ -82,6 +81,7 @@ class App extends Component {
   hideNotes= ()=>{
     this.setState({
       notesFlag: false,
+      editedId: null
     })
   }
 
