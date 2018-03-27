@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 
 class AddNote extends Component {
-  constructor(){
+  constructor(props){
     super();
     this.state = {
-      title: 'hi',
-      description: 'bye'
+      title: props.title,
+      description: props.description
     }
   }
 
@@ -19,6 +19,7 @@ class AddNote extends Component {
         description: ''
       })
   }
+
   titleHandler = (event)=> {
     this.setState({
       title: event.target.value
@@ -31,6 +32,7 @@ class AddNote extends Component {
   }
 
   render(){
+    // this.props
     return(
       <section>
         <label>'Enter Title'</label>

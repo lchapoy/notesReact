@@ -21,16 +21,17 @@ const GetNotes = ()=>{
         description: 'go out'
       },
       index2: {
-        id: 'index0',
+        id: 'index2',
         title: 'hello',
         description: 'from my new app'
       },
       index3: {
-        id: 'index1',
+        id: 'index3',
         title: 'bye',
         description: 'go out'
       }
     }),4000)
+
   });
 }
 
@@ -52,6 +53,9 @@ class App extends Component {
         loading: false
       })
     })
+  }
+  shouldComponentUpdate(nextProps, nextState){
+    return nextState.notesFlag
   }
 
   addNote = (title,description) =>{
@@ -81,36 +85,58 @@ class App extends Component {
     })
   }
 
+  editNote = (id)=>{
+    this.setState({
+      editedId: id,
+      notesFlag: false,
+    })
+  }
+
   render() {
   // const notes = this.state.notes;
-    const { notes, notesFlag, loading } = this.state;
-    const notesArray = Object.values(notes).map(({title, description})=>
+    const { notes, notesFlag, loading, editedId } = this.state;
+    const notesArray = Object.values(notes).map(({title, description, id})=>
       <Note
+        editNote={()=>this.editNote(id)}
         title={title}
         description={description}
       />
     )
+    const clickedNote = notes[editedId] || {};
     return (
       <div className="App">
         <Header/>
-        {loading && <h2>Loading</h2>}
         <button onClick={this.showNotes} style={{backgroundColor:notesFlag ? 'green' : ''}}>
           Notes
         </button>
         <button onClick={this.hideNotes} style={{backgroundColor: !notesFlag ? 'green' : ''}}>
           Add
         </button>
+        {loading && <h2>Loading</h2>}
+
         <section>
         </section>
-        {notesFlag ? <section>
+        { notesFlag ? <section>
           {notesArray}
-        </section> : <AddNote
-          addNoteHandler={this.addNote}
-        />}
+        </section> :
+        <AddNote
+           title={clickedNote.title}
+           description={clickedNote.description}
+         addNoteHandler={this.addNote}
+        />
+      }
+
+
       </div>
     );
   }
 }
+// <button onClick={this.showNotes} style={{backgroundColor:notesFlag ? 'green' : ''}}>
+//   Notes
+// </button>
+// <button onClick={this.hideNotes} style={{backgroundColor: !notesFlag ? 'green' : ''}}>
+//   Add
+// </button>
 // <header className="App-header">
 //   <img src={logo} className="App-logo" alt="logo" />
 //   <h1 className="App-title">Welcome to React</h1>
